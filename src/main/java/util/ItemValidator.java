@@ -1,6 +1,9 @@
-package util;
+/*
+ *  UCF COP3330 Fall 2021 Application Assignment 2 Solution
+ *  Copyright 2021 Tanner Sandlin
+ */
 
-import java.awt.font.NumericShaper;
+package util;
 
 public class ItemValidator {
 

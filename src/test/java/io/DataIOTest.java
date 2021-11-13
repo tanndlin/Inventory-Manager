@@ -1,3 +1,8 @@
+/*
+ *  UCF COP3330 Fall 2021 Application Assignment 2 Solution
+ *  Copyright 2021 Tanner Sandlin
+ */
+
 package io;
 
 import base.InventoryManager;
@@ -22,7 +27,7 @@ class DataIOTest {
     @BeforeAll
     static void createTargetDir() {
         File f = new File(path);
-        f.mkdir();
+        f.mkdir(); // Don't care about the result of this
     }
 
     @BeforeEach
@@ -38,7 +43,7 @@ class DataIOTest {
     @Test
     void saveInventoryAsTSV() {
         File f = new File(path + "listSaveTest.tsv");
-        f.delete();
+        f.delete(); // Don't care about the result of this
 
         Types.FileFormat format = Types.FileFormat.TSV;
         String inventoryAsTSV = InventoryConverter.getInventoryAsFileType(inventoryManager.getInventory(), format);
@@ -50,7 +55,7 @@ class DataIOTest {
     @Test
     void saveInventoryAsHTML() {
         File f = new File(path + "listSaveTest.html");
-        f.delete();
+        f.delete(); // Don't care about the result of this
 
         Types.FileFormat format = Types.FileFormat.HTML;
         String inventoryAsTSV = InventoryConverter.getInventoryAsFileType(inventoryManager.getInventory(), format);
@@ -62,7 +67,7 @@ class DataIOTest {
     @Test
     void saveInventoryAsJSON() {
         File f = new File(path + "listSaveTest.json");
-        f.delete();
+        f.delete(); // Don't care about the result of this
 
         Types.FileFormat format = Types.FileFormat.JSON;
         String inventoryAsTSV = InventoryConverter.getInventoryAsFileType(inventoryManager.getInventory(), format);

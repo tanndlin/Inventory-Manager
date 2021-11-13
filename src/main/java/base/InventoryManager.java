@@ -35,6 +35,8 @@ public class InventoryManager {
     // Alias for DataIO method
     public void save() {
         File f = getFileFromUser(scene.getWindow(), false);
+        if (f == null)
+            return;
 
         DataIO dataIO = new DataIO(inventory);
         dataIO.saveInventory(f);
@@ -43,6 +45,8 @@ public class InventoryManager {
     // Alias for DataIO method
     public void load() {
         File f = getFileFromUser(scene.getWindow(), true);
+        if (f == null)
+            return;
 
         DataIO dataIO = new DataIO(inventory);
         inventory.stealItems(dataIO.loadInventory(f));
