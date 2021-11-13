@@ -10,31 +10,31 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Inventory {
-    ObservableList items;
+    ObservableList<Item> items;
 
     public Inventory() {
         items = FXCollections.observableArrayList();
     }
 
-    public Inventory(ObservableList items) {
+    public Inventory(ObservableList<Item> items) {
         this.items = items;
     }
 
-    public ObservableList getItems() {
+    public ObservableList<Item> getItems() {
         return items;
     }
 
-    public String getAsFileType(Types.FileFormat format){
+    public String getAsFileType(Types.FileFormat format) {
         // Check format enum type and delegate to function below
         return null;
     }
 
-    private String getAsTSV(){
+    private String getAsTSV() {
         // Use StringBuilder to concat all items separated by \n
         return null;
     }
 
-    private String getAsHTML(){
+    private String getAsHTML() {
         // Create top of html
 
         // Populate table with each element
@@ -43,7 +43,7 @@ public class Inventory {
         return null;
     }
 
-    private String getAsJSON(){
+    private String getAsJSON() {
         // Use GSON
         return null;
     }

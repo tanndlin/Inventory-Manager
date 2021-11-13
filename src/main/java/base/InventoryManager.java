@@ -25,18 +25,33 @@ public class InventoryManager {
     }
 
     // Alias for DataIO method
-    public void save(){
+    public void save() {
         // Instantiate a DataIO
         // Call its method
     }
 
     // Alias for DataIO method
-    public void load(){
+    public void load() {
         // Instantiate a DataIO
         // Call its method
     }
 
-    public void addItem(Item item){
+    public void addItem(Item item) {
+        if (isDuplicate(item))
+            throw new IllegalArgumentException("Duplicate Serial Numbers: " + item.getSerialNumber());
+
         inventory.getItems().add(item);
+    }
+
+    public void clearItems() {
+        inventory.getItems().clear();
+    }
+
+    private boolean isDuplicate(Item item) {
+        for (Item i : inventory.getItems())
+            if (i.getSerialNumber().equals(item.getSerialNumber()))
+                return true;
+
+        return false;
     }
 }
