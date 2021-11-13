@@ -69,7 +69,13 @@ public class FXMLController implements Initializable {
 
     @FXML
     private void addItem() {
+        String serialNumber = serialInput.getText();
+        String name = nameInput.getText();
+        // TODO: 11/12/2021 input validation 
+        Double value = Double.parseDouble(valueInput.getText());
 
+        Item item = new Item(serialNumber, name, value);
+        inventoryManager.addItem(item);
     }
 
     @FXML

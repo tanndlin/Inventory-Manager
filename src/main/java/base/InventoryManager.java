@@ -6,6 +6,7 @@
 package base;
 
 import inventory.Inventory;
+import inventory.Item;
 
 public class InventoryManager {
 
@@ -33,5 +34,9 @@ public class InventoryManager {
     public void load(){
         // Instantiate a DataIO
         // Call its method
+    }
+
+    public void addItem(Item item){
+        inventory.getItems().add(item);
     }
 }

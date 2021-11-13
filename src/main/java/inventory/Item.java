@@ -18,6 +18,7 @@ public class Item {
     private SimpleDoubleProperty value;
 
     public Item(String serialNumber, String name, double value) {
+        // TODO: 11/12/2021 Input Validation
         this.serialNumber = new SimpleStringProperty(serialNumber);
         this.name = new SimpleStringProperty(name);
         this.value = new SimpleDoubleProperty(value);
