@@ -12,13 +12,19 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class FXMLController implements Initializable {
+
+    @FXML
+    private BorderPane pane;
 
     @FXML
     private TextField serialInput;
@@ -28,6 +34,9 @@ public class FXMLController implements Initializable {
     private TextField valueInput;
     @FXML
     private TextField searchInput;
+
+    @FXML
+    private TableView<Item> table;
     @FXML
     private TableColumn<Item, String> serialColumn;
     @FXML
@@ -35,45 +44,56 @@ public class FXMLController implements Initializable {
     @FXML
     private TableColumn<Item, String> valueColumn;
 
-
     private InventoryManager inventoryManager;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         inventoryManager = new InventoryManager(new Inventory());
+
+        serialColumn.setCellValueFactory(new PropertyValueFactory<>("serialNumber"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
+        table.setItems(inventoryManager.getInventory().getItems());
     }
 
-    public void onLoad(Stage stage){
+    public void onLoad(Stage stage) {
         // Bind properties for scene width && height
+        Scene scene = stage.getScene();
+        pane.prefWidthProperty().bind(scene.widthProperty());
+        pane.prefHeightProperty().bind(scene.heightProperty());
+
+        serialColumn.prefWidthProperty().bind(scene.widthProperty().divide(3));
+        nameColumn.prefWidthProperty().bind(scene.widthProperty().divide(3));
+        valueColumn.prefWidthProperty().bind(scene.widthProperty().divide(3));
     }
 
     @FXML
-    private void addItem(){
-
-    }
-
-    @FXML
-    private void editItem(){
-
-    }
-
-    @FXML
-    private void clearAllItems(){
-
-    }
-
-    @FXML
-    private void saveInventory(){
+    private void addItem() {
 
     }
 
     @FXML
-    private void loadInventory(){
+    private void editItem() {
 
     }
 
     @FXML
-    private void searchItem(){
+    private void clearAllItems() {
+
+    }
+
+    @FXML
+    private void saveInventory() {
+
+    }
+
+    @FXML
+    private void loadInventory() {
+
+    }
+
+    @FXML
+    private void searchItem() {
 
     }
 }
