@@ -18,7 +18,7 @@ public class Item {
     private SimpleStringProperty name;
     private SimpleDoubleProperty value;
 
-    public Item(String serialNumber, String name, double value) {
+    public Item(String serialNumber, String name, String value) {
         // Duplicates are checked at a higher level
         if (!ItemValidator.isValidSerial(serialNumber))
             throw new IllegalArgumentException("Serial not in correct form. Must be in the form A-XXX-XXX-XXX");
@@ -29,8 +29,8 @@ public class Item {
         this.name = new SimpleStringProperty(name);
 
         if (!ItemValidator.isValidValue(value))
-            throw new IllegalArgumentException("Value must be positive");
-        this.value = new SimpleDoubleProperty(value);
+            throw new IllegalArgumentException("Value must a number and >= 0");
+        this.value = new SimpleDoubleProperty(Double.parseDouble(value));
     }
 
     public String getSerialNumber() {

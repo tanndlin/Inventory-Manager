@@ -1,5 +1,7 @@
 package util;
 
+import java.awt.font.NumericShaper;
+
 public class ItemValidator {
 
     public static boolean isValidSerial(String serial) {
@@ -28,8 +30,12 @@ public class ItemValidator {
         return name.length() >= 2 && name.length() <= 256;
     }
 
-    public static boolean isValidValue(double value) {
-        return value >= 0;
+    public static boolean isValidValue(String value) {
+        try {
+            return Double.parseDouble(value) >= 0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
 }

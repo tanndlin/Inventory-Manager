@@ -11,6 +11,7 @@ import inventory.Item;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -71,12 +72,21 @@ public class FXMLController implements Initializable {
     private void addItem() {
         String serialNumber = serialInput.getText();
         String name = nameInput.getText();
-        // TODO: 11/12/2021 input validation
-        Double value = Double.parseDouble(valueInput.getText());
+        String value = valueInput.getText();
 
-        // TODO: 11/12/2021 Show Error Messages if any 
-        Item item = new Item(serialNumber, name, value);
-        inventoryManager.addItem(item);
+        try {
+            Item item = new Item(serialNumber, name, value);
+            inventoryManager.addItem(item);
+
+            serialInput.clear();
+            nameInput.clear();
+            valueInput.clear();
+        } catch (IllegalArgumentException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Input Not Valid");
+            alert.setContentText(e.getLocalizedMessage());
+            alert.showAndWait();
+        }
     }
 
     @FXML
