@@ -7,13 +7,21 @@ package base;
 
 import inventory.Inventory;
 import inventory.Item;
+import io.DataIO;
+import javafx.scene.Scene;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
+
+import java.io.File;
 
 public class InventoryManager {
 
     private Inventory inventory;
+    private Scene scene;
 
-    public InventoryManager(Inventory inventory) {
+    public InventoryManager(Inventory inventory, Scene scene) {
         this.inventory = inventory;
+        this.scene = scene;
     }
 
     public Inventory getInventory() {
@@ -26,21 +34,31 @@ public class InventoryManager {
 
     // Alias for DataIO method
     public void save() {
-        // Instantiate a DataIO
-        // Call its method
+        File f = getFileFromUser(scene.getWindow(), false);
+
+        DataIO dataIO = new DataIO(inventory);
+
+        // Get Extension
+        String fileName = f.toString();
+        String extensionAsString = fileName.substring(fileName.lastIndexOf(".") + 1);
+        Types.FileFormat format = Types.stringToFileFormat(extensionAsString);
+
+        dataIO.saveInventory(f, format);
     }
 
     // Alias for DataIO method
     public void load() {
-        // Instantiate a DataIO
-        // Call its method
+        File f = getFileFromUser(scene.getWindow(), true);
+
+        DataIO dataIO = new DataIO(inventory);
+        dataIO.loadInventory(f);
     }
 
     public void addItem(Item item) {
         if (isDuplicate(item))
             throw new IllegalArgumentException("Duplicate Serial Numbers: " + item.getSerialNumber());
 
-        inventory.getItems().add(item);
+        inventory.addItem(item);
     }
 
     public void clearItems() {
@@ -53,5 +71,21 @@ public class InventoryManager {
                 return true;
 
         return false;
+    }
+
+    private File getFileFromUser(Window window, boolean load) {
+        // Use file browser to get file location
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("TSV", "*.tsv"),
+                new FileChooser.ExtensionFilter("HTML", "*.html"),
+                new FileChooser.ExtensionFilter("JSON", "*.json")
+        );
+        fileChooser.setInitialFileName("Inventory");
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + "/desktop/"));
+
+        if (load)
+            return fileChooser.showOpenDialog(window);
+        return fileChooser.showSaveDialog(window);
     }
 }

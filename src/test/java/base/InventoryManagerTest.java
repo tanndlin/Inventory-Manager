@@ -15,7 +15,7 @@ class InventoryManagerTest {
 
     @BeforeEach
     void init() {
-        inventoryManager = new InventoryManager(new Inventory());
+        inventoryManager = new InventoryManager(new Inventory(), null);
     }
 
     @Test

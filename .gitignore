@@ -1,6 +1,7 @@
 .gradle
 build/
 .idea/
+data/listSaveTest.*
 
 # Ignore Gradle GUI config
 gradle-app.setting

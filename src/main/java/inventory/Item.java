@@ -11,6 +11,7 @@ import javafx.beans.property.SimpleStringProperty;
 import util.ItemValidator;
 
 import java.io.File;
+import java.util.stream.Stream;
 
 public class Item {
 
@@ -58,18 +59,30 @@ public class Item {
     }
 
     public String getItemAsFormat(Types.FileFormat format) {
-        // Dispatch calls to getItemAs<FileFormatEnum>
+        if (format.equals(Types.FileFormat.TSV))
+            return getItemAsTSV();
+
+        if (format.equals(Types.FileFormat.HTML))
+            return getItemAsHTML();
+
+        if (format.equals(Types.FileFormat.JSON))
+            return getItemAsJSON();
         return null;
     }
 
     private String getItemAsTSV() {
-        // Return item as tab sep values
-        return null;
+        return String.format("%s\t%s\t%s", serialNumber.get(), name.get(), value.get());
     }
 
     private String getItemAsHTML() {
-        // Return item as a table cell in html
-        return null;
+        String[] itemArray = new String[]{serialNumber.get(), name.get(), value.get() + ""};
+        String[] asHTML = Stream.of(itemArray).map((String s) -> String.format("<td>%s</td>\n", s)).toArray(String[]::new);
+
+        StringBuilder builder = new StringBuilder();
+        for (String s : asHTML)
+            builder.append(s);
+
+        return String.format("<tr>%s</tr>", builder.toString());
     }
 
     private String getItemAsJSON() {

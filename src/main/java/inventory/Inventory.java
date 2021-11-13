@@ -6,6 +6,7 @@
 package inventory;
 
 import base.Types;
+import com.google.gson.Gson;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -24,27 +25,7 @@ public class Inventory {
         return items;
     }
 
-    public String getAsFileType(Types.FileFormat format) {
-        // Check format enum type and delegate to function below
-        return null;
-    }
-
-    private String getAsTSV() {
-        // Use StringBuilder to concat all items separated by \n
-        return null;
-    }
-
-    private String getAsHTML() {
-        // Create top of html
-
-        // Populate table with each element
-
-        //Finish HTML
-        return null;
-    }
-
-    private String getAsJSON() {
-        // Use GSON
-        return null;
+    public void addItem(Item item) {
+        items.add(item);
     }
 }

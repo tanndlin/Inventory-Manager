@@ -5,9 +5,14 @@
 
 package io;
 
+import base.Types;
 import inventory.Inventory;
+import util.InventoryConverter;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
 
 public class DataIO {
 
@@ -17,28 +22,22 @@ public class DataIO {
         this.inventory = inventory;
     }
 
-    public void saveInventory(){
-        // Get file location from user
-        // Get file type from user
-
+    public void saveInventory(File f, Types.FileFormat format) {
         // Get Inventory as designated file type
+        String inventoryAsFormat = InventoryConverter.getInventoryAsFileType(inventory, format);
         // Save it
+
+        try (FileWriter writer = new FileWriter(f)) {
+            if (!f.exists())
+                f.createNewFile();
+
+            writer.write(inventoryAsFormat);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public Inventory loadInventory(){
-        // Get file location from user
-        return null;
-    }
-
-    private File getFileFromUser(boolean saving){
-        // Use file chooser to get location
-        // Create FileChooser
-
-        // If saving, Display for save
-
-        // else display for load
-
-        // Different kind of chooser for saving
+    public Inventory loadInventory(File f) {
         return null;
     }
 }

@@ -49,12 +49,9 @@ public class FXMLController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        inventoryManager = new InventoryManager(new Inventory());
-
         serialColumn.setCellValueFactory(new PropertyValueFactory<>("serialNumber"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
-        table.setItems(inventoryManager.getInventory().getItems());
     }
 
     public void onLoad(Stage stage) {
@@ -66,6 +63,9 @@ public class FXMLController implements Initializable {
         serialColumn.prefWidthProperty().bind(scene.widthProperty().divide(3));
         nameColumn.prefWidthProperty().bind(scene.widthProperty().divide(3));
         valueColumn.prefWidthProperty().bind(scene.widthProperty().divide(3));
+
+        inventoryManager = new InventoryManager(new Inventory(), scene);
+        table.setItems(inventoryManager.getInventory().getItems());
     }
 
     @FXML
@@ -101,12 +101,12 @@ public class FXMLController implements Initializable {
 
     @FXML
     private void saveInventory() {
-
+        inventoryManager.save();
     }
 
     @FXML
     private void loadInventory() {
-
+        inventoryManager.load();
     }
 
     @FXML

@@ -12,9 +12,15 @@ public class Types {
         JSON,
     }
 
-    public static FileFormat stringToFileFormat(String s){
-        // Check if s is equal to each enum
-        // If so return it
+    public static FileFormat stringToFileFormat(String s) {
+        if (s.equalsIgnoreCase("TSV"))
+            return FileFormat.TSV;
+
+        if (s.equalsIgnoreCase("HTML"))
+            return FileFormat.HTML;
+
+        if (s.equalsIgnoreCase("JSON"))
+            return FileFormat.JSON;
 
         return null;
     }
