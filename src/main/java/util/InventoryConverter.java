@@ -9,36 +9,10 @@ import base.Types;
 import com.google.gson.Gson;
 import inventory.Inventory;
 import inventory.Item;
+import inventory.primitives.PrimitiveInventory;
+import inventory.primitives.PrimitiveItem;
 
 public class InventoryConverter {
-
-    // Needs to be primitive for Gson
-    private static class PrimitiveInventory {
-        PrimitiveItem[] items;
-
-        PrimitiveInventory(Inventory inventory) {
-            items = new PrimitiveItem[inventory.getItems().size()];
-            for(int i = 0; i < items.length; i++)
-                items[i] = itemToPrimitiveItem(inventory.getItems().get(i));
-
-        }
-
-        private static PrimitiveItem itemToPrimitiveItem(Item item) {
-            return new PrimitiveItem(item.getSerialNumber(), item.getName(), item.getValue());
-        }
-    }
-
-    private static class PrimitiveItem {
-        String serialNumber;
-        String name;
-        double value;
-
-        public PrimitiveItem(String serialNumber, String name, double value) {
-            this.serialNumber = serialNumber;
-            this.name = name;
-            this.value = value;
-        }
-    }
 
     private static String defaultHTML = """
             <!DOCTYPE html>
@@ -95,5 +69,16 @@ public class InventoryConverter {
 
     private static String getAsJSON(Inventory inventory) {
         return new Gson().toJson(new PrimitiveInventory(inventory));
+    }
+
+    public static Inventory primitiveInventoryToSuper(PrimitiveInventory privInv) {
+        Inventory inventory = new Inventory();
+        for (PrimitiveItem privItem : privInv.getItems())
+            inventory.addItem(new Item(
+                    privItem.getSerialNumber(),
+                    privItem.getName(),
+                    privItem.getValue() + ""));
+
+        return inventory;
     }
 }

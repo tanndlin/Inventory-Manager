@@ -28,4 +28,10 @@ public class Inventory {
     public void addItem(Item item) {
         items.add(item);
     }
+
+    public void stealItems(Inventory newInventory) {
+        items.clear();
+        for(Item item : newInventory.getItems())
+            addItem(item);
+    }
 }

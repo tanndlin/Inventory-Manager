@@ -28,9 +28,9 @@ class DataIOTest {
     @BeforeEach
     void init() {
         inventoryManager = new InventoryManager(new Inventory(), null);
-        inventoryManager.addItem(new Item("A-xxx-xxx-xxx", "Playstation 5", "699.99"));
-        inventoryManager.addItem(new Item("A-xxx-xxx-420", "Xbox Series X", "569.50"));
-        inventoryManager.addItem(new Item("A-xxx-xxx-069", "3090", "1500"));
+        inventoryManager.addItem(new Item("A-XXX-XXX-XXX", "Playstation 5", "699.99"));
+        inventoryManager.addItem(new Item("A-XXX-XXX-420", "Xbox Series X", "569.50"));
+        inventoryManager.addItem(new Item("A-XXX-XXX-069", "3090", "1500"));
 
         dataIO = new DataIO(inventoryManager.getInventory());
     }
@@ -42,7 +42,7 @@ class DataIOTest {
 
         Types.FileFormat format = Types.FileFormat.TSV;
         String inventoryAsTSV = InventoryConverter.getInventoryAsFileType(inventoryManager.getInventory(), format);
-        dataIO.saveInventory(f, format);
+        dataIO.saveInventory(f);
 
         assertTrue(f.exists());
     }
@@ -54,7 +54,7 @@ class DataIOTest {
 
         Types.FileFormat format = Types.FileFormat.HTML;
         String inventoryAsTSV = InventoryConverter.getInventoryAsFileType(inventoryManager.getInventory(), format);
-        dataIO.saveInventory(f, format);
+        dataIO.saveInventory(f);
 
         assertTrue(f.exists());
     }
@@ -66,13 +66,38 @@ class DataIOTest {
 
         Types.FileFormat format = Types.FileFormat.JSON;
         String inventoryAsTSV = InventoryConverter.getInventoryAsFileType(inventoryManager.getInventory(), format);
-        dataIO.saveInventory(f, format);
+        dataIO.saveInventory(f);
 
         assertTrue(f.exists());
     }
 
     @Test
-    void loadInventory() {
+    void loadInventoryFromTSV() {
+        File f = new File(path + "listLoadTest.tsv");
+        Inventory inventory = dataIO.loadInventory(f);
 
+        assertEquals("Playstation 5", inventory.getItems().get(0).getName());
+        assertEquals(699.99, inventory.getItems().get(0).getValue());
+        assertEquals("A-XXX-XXX-420", inventory.getItems().get(1).getSerialNumber());
+    }
+
+    @Test
+    void loadInventoryFromHTML() {
+        File f = new File(path + "listLoadTest.html");
+        Inventory inventory = dataIO.loadInventory(f);
+
+        assertEquals("Playstation 5", inventory.getItems().get(0).getName());
+        assertEquals(699.99, inventory.getItems().get(0).getValue());
+        assertEquals("A-XXX-XXX-420", inventory.getItems().get(1).getSerialNumber());
+    }
+
+    @Test
+    void loadInventoryFromJSON() {
+        File f = new File(path + "listLoadTest.json");
+        Inventory inventory = dataIO.loadInventory(f);
+
+        assertEquals("Playstation 5", inventory.getItems().get(0).getName());
+        assertEquals(699.99, inventory.getItems().get(0).getValue());
+        assertEquals("A-XXX-XXX-420", inventory.getItems().get(1).getSerialNumber());
     }
 }

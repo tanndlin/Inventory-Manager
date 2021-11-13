@@ -37,13 +37,7 @@ public class InventoryManager {
         File f = getFileFromUser(scene.getWindow(), false);
 
         DataIO dataIO = new DataIO(inventory);
-
-        // Get Extension
-        String fileName = f.toString();
-        String extensionAsString = fileName.substring(fileName.lastIndexOf(".") + 1);
-        Types.FileFormat format = Types.stringToFileFormat(extensionAsString);
-
-        dataIO.saveInventory(f, format);
+        dataIO.saveInventory(f);
     }
 
     // Alias for DataIO method
@@ -51,7 +45,7 @@ public class InventoryManager {
         File f = getFileFromUser(scene.getWindow(), true);
 
         DataIO dataIO = new DataIO(inventory);
-        dataIO.loadInventory(f);
+        inventory.stealItems(dataIO.loadInventory(f));
     }
 
     public void addItem(Item item) {
