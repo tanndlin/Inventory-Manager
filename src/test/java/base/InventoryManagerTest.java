@@ -43,7 +43,7 @@ class InventoryManagerTest {
     @Test
     void fuckTonOfItems(){
         for(int i =0 ; i < 10000; i++){
-            String serialNumber = String.format("A-XB1-%d-%d", i / 1000, i % 1000);
+            String serialNumber = String.format("A-XB1-%03d-%03d", i / 1000, i % 1000);
             inventoryManager.addItem(new Item(serialNumber, "Hi", 0));
         }
 

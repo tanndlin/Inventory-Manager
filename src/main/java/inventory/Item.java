@@ -8,6 +8,7 @@ package inventory;
 import base.Types;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
+import util.ItemValidator;
 
 import java.io.File;
 
@@ -18,9 +19,17 @@ public class Item {
     private SimpleDoubleProperty value;
 
     public Item(String serialNumber, String name, double value) {
-        // TODO: 11/12/2021 Input Validation
+        // Duplicates are checked at a higher level
+        if (!ItemValidator.isValidSerial(serialNumber))
+            throw new IllegalArgumentException("Serial not in correct form. Must be in the form A-XXX-XXX-XXX");
         this.serialNumber = new SimpleStringProperty(serialNumber);
+
+        if (!ItemValidator.isValidName(name))
+            throw new IllegalArgumentException("Name not correct length. Must be between 2 and 256");
         this.name = new SimpleStringProperty(name);
+
+        if (!ItemValidator.isValidValue(value))
+            throw new IllegalArgumentException("Value must be positive");
         this.value = new SimpleDoubleProperty(value);
     }
 
@@ -48,22 +57,22 @@ public class Item {
         return value;
     }
 
-    public String getItemAsFormat(Types.FileFormat format){
+    public String getItemAsFormat(Types.FileFormat format) {
         // Dispatch calls to getItemAs<FileFormatEnum>
         return null;
     }
 
-    private String getItemAsTSV(){
+    private String getItemAsTSV() {
         // Return item as tab sep values
         return null;
     }
 
-    private String getItemAsHTML(){
+    private String getItemAsHTML() {
         // Return item as a table cell in html
         return null;
     }
 
-    private String getItemAsJSON(){
+    private String getItemAsJSON() {
         // This is not necessary as GSON takes care of it from the inventory level
         return null;
     }
