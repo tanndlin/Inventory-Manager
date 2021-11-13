@@ -14,13 +14,19 @@ public class InventoryManagementApplication extends javafx.application.Applicati
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("scene.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("scene.fxml"));
+        Parent root = loader.load();
+
+        FXMLController controller = (FXMLController)loader.getController();
 
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
 
-        stage.setTitle("Application Assignment 2");
+        stage.setTitle("Application Assignment 1");
+
         stage.setScene(scene);
+        controller.onLoad(stage);
+
         stage.show();
     }
 

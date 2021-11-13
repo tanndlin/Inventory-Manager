@@ -48,6 +48,9 @@
                     </children>
                 </HBox>
             </bottom>
+         <top>
+            <TextField fx:id="searchInput" onAction="#searchItem" promptText="Search" BorderPane.alignment="CENTER" />
+         </top>
         </BorderPane>
     </children>
 </AnchorPane>
