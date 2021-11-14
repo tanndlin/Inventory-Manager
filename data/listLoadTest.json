@@ -1,0 +1,19 @@
+{
+    "items": [
+        {
+            "serialNumber": "A-XXX-XXX-XXX",
+            "name": "Playstation 5",
+            "value": 699.99
+        },
+        {
+            "serialNumber": "A-XXX-XXX-420",
+            "name": "Xbox Series X",
+            "value": 569.5
+        },
+        {
+            "serialNumber": "A-XXX-XXX-069",
+            "name": "3090",
+            "value": 1500.0
+        }
+    ]
+}
