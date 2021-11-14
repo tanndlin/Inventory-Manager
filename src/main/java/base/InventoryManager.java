@@ -17,7 +17,7 @@ import java.io.File;
 public class InventoryManager {
 
     private Inventory inventory;
-    private Scene scene;
+    private final Scene scene;
 
     public InventoryManager(Inventory inventory, Scene scene) {
         this.inventory = inventory;
@@ -49,7 +49,12 @@ public class InventoryManager {
             return;
 
         DataIO dataIO = new DataIO(inventory);
-        inventory.stealItems(dataIO.loadInventory(f));
+
+        Inventory loadedInventory = dataIO.loadInventory(f);
+        if (loadedInventory == null)
+            return;
+
+        inventory.stealItems(loadedInventory);
     }
 
     public void addItem(Item item) {

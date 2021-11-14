@@ -1,0 +1,121 @@
+@startuml
+
+PrimitiveInventory --o PrimitiveItem
+PrimitiveInventory --- Inventory
+PrimitiveItem --- Item
+
+InventoryManagementApplication --o FXMLController
+FXMLController --o InventoryManager
+InventoryManager --o Inventory
+Inventory --o Item
+InventoryManager --o DataIO
+DataIO --o InventoryConverter
+DataIO --o Inventory
+InventoryConverter --o Inventory
+Item --o ItemValidator
+InventoryConverter --o PrimitiveInventory
+
+class InventoryManagementApplication {
+    +main(String args[])
+}
+
+class FXMLController {
+        -BorderPane pane
+        -TextField serialInput
+        -TextField nameInput
+        -TextField valueInput
+        -TextField searchInput
+        -TableView<Item> table
+        -TableColumn<Item, String> serialColumn
+        -TableColumn<Item, String> nameColumn
+        -TableColumn<Item, String> valueColumn
+
+        -InventoryManager inventoryManager
+}
+
+class InventoryManager {
+    +initialize(URL url, ResourceBundle rb): void
+    +onLoad(Stage stage): void
+    -addItem(): void
+    -editItem(): void
+    -clearAllItems(): void
+    -saveInventory(): void
+    -loadInventory(): void
+    -searchItem(): void
+}
+
+class Types {
+    +enum FileFormat
+    + {stringToFileFormat}: FileFormat
+}
+
+class PrimitiveInventory {
+    -PrimitiveItem[] items
+
+    -itemToPrimitiveItem(Item item): PrimitiveItem
+    +getItems(): PrimitiveItem[]
+}
+
+class PrimitiveItem {
+    -String serialNumber
+    -String name
+    -double value
+
+    +getSerialNumber(): String
+    +getName(): String
+    +getValue(): double
+}
+
+class Inventory {
+    -ObservableList<Item> items
+
+    +getItems(): ObservableList<Item>
+    +stealItems(Inventory): void
+}
+
+class Item {
+    -SimpleStringProperty serialNumber
+    -SimpleStringProperty name
+    -SimpleDoubleProperty value
+
+    +getSerialNumber(): String
+    +serialNumberProperty(): SimpleStringProperty
+    +getName(): String
+    +nameProperty(): SimpleStringProperty
+    +getValue(): double
+    +valueProperty(): SimpleDoubleProperty
+    +getItemAsFormat(Types.FileFormat format): String
+    -getItemAsTSV(): String
+    -getItemAsHTML(): String
+    -getItemAsJSON(): String
+}
+
+class DataIO {
+    -Inventory inventory;
+
+    +saveInventory(File f): void
+    +loadInventory(File f): Inventory
+    -parseFromFileType(Types.FileFormat format, String data): Inventory
+    -parseFromTSV(String data): Inventory
+    -parseFromHTML(String data): Inventory
+    -parseFromJSON(String data): Inventory
+    -formatFromFile(File f): FileFormat
+}
+
+class InventoryConverter {
+    -{static} String defaultHTML
+
+    +{static} getInventoryAsFileType(Inventory inventory, Types.FileFormat format): String
+    -{static} getAsTSV(Inventory inventory): String
+    -{static} getAsHTML(Inventory inventory): String
+    -{static} getAsJSON(Inventory inventory): String
+    +{static} primitiveInventoryToSuper(PrimitiveInventory privInv): Inventory
+}
+
+class ItemValidator {
+    +{static}isValidSerial(String serial): boolean
+    +{static}isValidName(String name): boolean
+    +{static}isValidValue(String value): boolean
+}
+
+@enduml
