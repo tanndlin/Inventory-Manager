@@ -8,6 +8,9 @@ package base;
 
 import inventory.Inventory;
 import inventory.Item;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -26,6 +29,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 
 public class FXMLController implements Initializable {
 
@@ -51,6 +55,7 @@ public class FXMLController implements Initializable {
     private TableColumn<Item, Double> valueColumn;
 
     private InventoryManager inventoryManager;
+    FilteredList<Item> filteredList;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -70,6 +75,8 @@ public class FXMLController implements Initializable {
         valueColumn.prefWidthProperty().bind(scene.widthProperty().divide(3));
 
         inventoryManager = new InventoryManager(new Inventory(), scene);
+
+        filteredList = new FilteredList<>(inventoryManager.getInventory().getItems());
         table.setItems(inventoryManager.getInventory().getItems());
     }
 
@@ -95,7 +102,7 @@ public class FXMLController implements Initializable {
     }
 
     @FXML
-    private void editItem(){
+    private void editItem() {
         Item selectedItem = table.getSelectionModel().getSelectedItem();
         serialInput.setText(selectedItem.getSerialNumber());
         nameInput.setText(selectedItem.getName());
@@ -121,6 +128,16 @@ public class FXMLController implements Initializable {
 
     @FXML
     private void searchItem() {
-        System.out.println(inventoryManager.getInventory().getItems().get(0).getValue());
+        if (searchInput.getText().length() == 0) {
+            table.setItems(inventoryManager.getInventory().getItems());
+            return;
+        }
+
+        filteredList.setPredicate(item -> item.matches(searchInput.getText()));
+
+        // Wrap filtered list in sorted list to make it sortable
+        SortedList<Item> sorted = new SortedList<>(filteredList);
+        table.setItems(sorted);
+        sorted.comparatorProperty().bind(table.comparatorProperty());
     }
 }

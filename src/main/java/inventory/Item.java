@@ -104,4 +104,12 @@ public class Item {
         if (ItemValidator.isValidValue(newValue))
             value.set(Double.parseDouble(newValue));
     }
+
+    public boolean matches(String filter) {
+        boolean matchedSerial = getSerialNumber().contains(filter);
+        boolean matchedName = getName().contains(filter);
+        boolean matchedValue = (getValue() + "").contains(filter);
+
+        return matchedSerial || matchedName || matchedValue;
+    }
 }
