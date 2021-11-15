@@ -29,9 +29,9 @@
                             <children>
                                 <HBox layoutY="8.0" spacing="10.0">
                                     <children>
-                                        <TextField fx:id="serialInput" promptText="Serial #" />
-                                        <TextField fx:id="nameInput" promptText="Name" />
-                                        <TextField fx:id="valueInput" promptText="Value" />
+                                        <TextField fx:id="serialInput" onAction="#addItem" promptText="Serial #" />
+                                        <TextField fx:id="nameInput" onAction="#addItem" promptText="Name" />
+                                        <TextField fx:id="valueInput" onAction="#addItem" promptText="Value" />
                                     </children>
                                 </HBox>
                             </children>
@@ -39,7 +39,7 @@
                         <ButtonBar prefHeight="40.0" prefWidth="16.0">
                             <buttons>
                                 <Button mnemonicParsing="false" onAction="#addItem" text="Add Item" />
-                                <Button mnemonicParsing="false" onAction="#editItem" text="Edit Item" />
+                        <Button mnemonicParsing="false" onAction="#editItem" text="Edit Item" />
                                 <Button mnemonicParsing="false" onAction="#clearAllItems" text="Clear All" />
                                 <Button mnemonicParsing="false" onAction="#saveInventory" text="Save" />
                                 <Button mnemonicParsing="false" onAction="#loadInventory" text="Load" />

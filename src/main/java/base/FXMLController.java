@@ -16,10 +16,15 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.util.converter.DoubleStringConverter;
+import util.ItemValidator;
 
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class FXMLController implements Initializable {
@@ -43,7 +48,7 @@ public class FXMLController implements Initializable {
     @FXML
     private TableColumn<Item, String> nameColumn;
     @FXML
-    private TableColumn<Item, String> valueColumn;
+    private TableColumn<Item, Double> valueColumn;
 
     private InventoryManager inventoryManager;
 
@@ -90,8 +95,13 @@ public class FXMLController implements Initializable {
     }
 
     @FXML
-    private void editItem() {
+    private void editItem(){
+        Item selectedItem = table.getSelectionModel().getSelectedItem();
+        serialInput.setText(selectedItem.getSerialNumber());
+        nameInput.setText(selectedItem.getName());
+        valueInput.setText(selectedItem.getValue() + "");
 
+        inventoryManager.getInventory().removeItem(selectedItem);
     }
 
     @FXML
@@ -111,6 +121,6 @@ public class FXMLController implements Initializable {
 
     @FXML
     private void searchItem() {
-
+        System.out.println(inventoryManager.getInventory().getItems().get(0).getValue());
     }
 }

@@ -89,4 +89,19 @@ public class Item {
         // This is not necessary as GSON takes care of it from the inventory level
         return null;
     }
+
+    public void setSerial(String newSerial) {
+        if (ItemValidator.isValidSerial(newSerial))
+            serialNumber.set(newSerial);
+    }
+
+    public void setName(String newName) {
+        if (ItemValidator.isValidName(newName))
+            name.set(newName);
+    }
+
+    public void setValue(String newValue) {
+        if (ItemValidator.isValidValue(newValue))
+            value.set(Double.parseDouble(newValue));
+    }
 }

@@ -34,4 +34,8 @@ public class Inventory {
         for(Item item : newInventory.getItems())
             addItem(item);
     }
+
+    public void removeItem(Item item) {
+        items.remove(item);
+    }
 }

@@ -46,7 +46,7 @@ class InventoryManager {
 
 class Types {
     +enum FileFormat
-    + {stringToFileFormat}: FileFormat
+    +{stringToFileFormat}: FileFormat
 }
 
 class PrimitiveInventory {
