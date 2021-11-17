@@ -18,6 +18,8 @@ import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// Req 13 && 14
+
 class DataIOTest {
 
     static final String path = "./data/";
@@ -50,6 +52,12 @@ class DataIOTest {
         dataIO.saveInventory(f);
 
         assertTrue(f.exists());
+
+        Inventory loadedInventory = dataIO.loadInventory(f);
+        assertEquals(
+                inventoryManager.getItem(0).getSerialNumber(),
+                loadedInventory.getItems().get(0).getSerialNumber()
+        );
     }
 
     @Test
@@ -62,6 +70,12 @@ class DataIOTest {
         dataIO.saveInventory(f);
 
         assertTrue(f.exists());
+
+        Inventory loadedInventory = dataIO.loadInventory(f);
+        assertEquals(
+                inventoryManager.getItem(0).getSerialNumber(),
+                loadedInventory.getItems().get(0).getSerialNumber()
+        );
     }
 
     @Test
@@ -74,6 +88,12 @@ class DataIOTest {
         dataIO.saveInventory(f);
 
         assertTrue(f.exists());
+
+        Inventory loadedInventory = dataIO.loadInventory(f);
+        assertEquals(
+                inventoryManager.getItem(0).getSerialNumber(),
+                loadedInventory.getItems().get(0).getSerialNumber()
+        );
     }
 
     @Test

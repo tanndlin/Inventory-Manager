@@ -91,4 +91,16 @@ public class InventoryManager {
             return fileChooser.showOpenDialog(window);
         return fileChooser.showSaveDialog(window);
     }
+
+    public void removeItem(Item item) {
+        inventory.removeItem(item);
+    }
+
+    public Item getItem(int index) {
+        return inventory.getItems().get(index);
+    }
+
+    public int size() {
+        return inventory.getItems().size();
+    }
 }

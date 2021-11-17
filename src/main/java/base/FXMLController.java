@@ -108,7 +108,7 @@ public class FXMLController implements Initializable {
         nameInput.setText(selectedItem.getName());
         valueInput.setText(selectedItem.getValue() + "");
 
-        inventoryManager.getInventory().removeItem(selectedItem);
+        inventoryManager.removeItem(selectedItem);
     }
 
     @FXML

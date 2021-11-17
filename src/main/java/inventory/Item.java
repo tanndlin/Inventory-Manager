@@ -82,7 +82,7 @@ public class Item {
         for (String s : asHTML)
             builder.append(s);
 
-        return String.format("<tr>%s</tr>", builder.toString());
+        return String.format("<tr>\n%s</tr>", builder.toString());
     }
 
     private String getItemAsJSON() {
