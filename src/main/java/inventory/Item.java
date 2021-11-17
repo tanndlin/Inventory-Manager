@@ -106,9 +106,11 @@ public class Item {
     }
 
     public boolean matches(String filter) {
-        boolean matchedSerial = getSerialNumber().contains(filter);
-        boolean matchedName = getName().contains(filter);
-        boolean matchedValue = (getValue() + "").contains(filter);
+        String filterLower = filter.toLowerCase();
+
+        boolean matchedSerial = getSerialNumber().toLowerCase().contains(filterLower);
+        boolean matchedName = getName().toLowerCase().contains(filterLower);
+        boolean matchedValue = (getValue() + "").toLowerCase().contains(filterLower);
 
         return matchedSerial || matchedName || matchedValue;
     }
