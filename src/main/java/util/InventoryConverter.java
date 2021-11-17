@@ -42,15 +42,14 @@ public class InventoryConverter {
         if (format.equals(Types.FileFormat.HTML))
             return getAsHTML(inventory);
 
-        if (format.equals(Types.FileFormat.JSON))
-            return getAsJSON(inventory);
-
-        return null;
+        // Default return
+        return getAsJSON(inventory);
     }
 
     private static String getAsTSV(Inventory inventory) {
         StringBuilder builder = new StringBuilder();
 
+        // Append each item to the builder
         for (Item i : inventory.getItems())
             builder.append(i.getItemAsFormat(Types.FileFormat.TSV)).append('\n');
 
@@ -71,8 +70,11 @@ public class InventoryConverter {
         return new Gson().toJson(new PrimitiveInventory(inventory));
     }
 
+    //Converts PrimitiveInventory to Inventory
     public static Inventory primitiveInventoryToSuper(PrimitiveInventory privInv) {
         Inventory inventory = new Inventory();
+
+        // For each item, turn it into a regular Item
         for (PrimitiveItem privItem : privInv.getItems())
             inventory.addItem(new Item(
                     privItem.getSerialNumber(),

@@ -19,6 +19,7 @@ public class PrimitiveInventory {
     }
 
     private PrimitiveItem itemToPrimitiveItem(Item item) {
+        // Takes a normal item and creates a primitive item with the same attributes
         return new PrimitiveItem(item.getSerialNumber(), item.getName(), item.getValue());
     }
 

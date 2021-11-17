@@ -30,6 +30,8 @@ public class Inventory {
     }
 
     public void stealItems(Inventory newInventory) {
+        // Used to replace all items in inventory without calling new Inventory
+
         items.clear();
         for(Item item : newInventory.getItems())
             addItem(item);

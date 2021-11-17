@@ -10,16 +10,17 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import util.ItemValidator;
 
-import java.io.File;
 import java.util.stream.Stream;
 
 public class Item {
 
-    private SimpleStringProperty serialNumber;
-    private SimpleStringProperty name;
-    private SimpleDoubleProperty value;
+    private final SimpleStringProperty serialNumber;
+    private final SimpleStringProperty name;
+    private final SimpleDoubleProperty value;
 
     public Item(String serialNumber, String name, String value) {
+        // Make sure each param is valid then add it
+
         // Duplicates are checked at a higher level
         if (!ItemValidator.isValidSerial(serialNumber))
             throw new IllegalArgumentException("Serial not in correct form. Must be in the form A-XXX-XXX-XXX");
@@ -38,27 +39,16 @@ public class Item {
         return serialNumber.get();
     }
 
-    public SimpleStringProperty serialNumberProperty() {
-        return serialNumber;
-    }
-
     public String getName() {
         return name.get();
-    }
-
-    public SimpleStringProperty nameProperty() {
-        return name;
     }
 
     public double getValue() {
         return value.get();
     }
 
-    public SimpleDoubleProperty valueProperty() {
-        return value;
-    }
-
     public String getItemAsFormat(Types.FileFormat format) {
+        // Delegate to the appropriate method depending on enum value
         if (format.equals(Types.FileFormat.TSV))
             return getItemAsTSV();
 
@@ -71,13 +61,19 @@ public class Item {
     }
 
     private String getItemAsTSV() {
+        // Attributes sep by tabs
         return String.format("%s\t%s\t%s", serialNumber.get(), name.get(), value.get());
     }
 
     private String getItemAsHTML() {
+        // Create an HTML table row
+
         String[] itemArray = new String[]{serialNumber.get(), name.get(), value.get() + ""};
+
+        // Wrap each element in HTML table cell
         String[] asHTML = Stream.of(itemArray).map((String s) -> String.format("<td>%s</td>\n", s)).toArray(String[]::new);
 
+        // Add each cell to the row
         StringBuilder builder = new StringBuilder();
         for (String s : asHTML)
             builder.append(s);
@@ -90,24 +86,10 @@ public class Item {
         return null;
     }
 
-    public void setSerial(String newSerial) {
-        if (ItemValidator.isValidSerial(newSerial))
-            serialNumber.set(newSerial);
-    }
-
-    public void setName(String newName) {
-        if (ItemValidator.isValidName(newName))
-            name.set(newName);
-    }
-
-    public void setValue(String newValue) {
-        if (ItemValidator.isValidValue(newValue))
-            value.set(Double.parseDouble(newValue));
-    }
-
     public boolean matches(String filter) {
         String filterLower = filter.toLowerCase();
 
+        // Check to see if any of the attributes contain the query
         boolean matchedSerial = getSerialNumber().toLowerCase().contains(filterLower);
         boolean matchedName = getName().toLowerCase().contains(filterLower);
         boolean matchedValue = (getValue() + "").toLowerCase().contains(filterLower);

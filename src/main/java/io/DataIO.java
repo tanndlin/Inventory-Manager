@@ -7,7 +7,6 @@ package io;
 
 import base.Types;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import inventory.Inventory;
 import inventory.Item;
 import inventory.primitives.PrimitiveInventory;
@@ -20,12 +19,11 @@ import util.InventoryConverter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class DataIO {
 
-    private Inventory inventory;
+    private final Inventory inventory;
 
     public DataIO(Inventory inventory) {
         this.inventory = inventory;
@@ -40,7 +38,7 @@ public class DataIO {
 
         try (FileWriter writer = new FileWriter(f)) {
             if (!f.exists())
-                f.createNewFile();
+                f.createNewFile(); // Result is irrelevant
 
             writer.write(inventoryAsFormat);
         } catch (IOException e) {
@@ -77,18 +75,22 @@ public class DataIO {
     }
 
     private Inventory parseFromTSV(String data) {
-        Inventory inventory = new Inventory();
+        Inventory parsed = new Inventory();
+
+        // Each item is on its own line
         String[] itemsAsStrings = data.split("\n");
+
+        // Separate by tabs to get serial name and value
         for (String itemAsString : itemsAsStrings) {
             String[] split = itemAsString.split("\t");
-            inventory.addItem(new Item(split[0], split[1], split[2]));
+            parsed.addItem(new Item(split[0], split[1], split[2]));
         }
 
-        return inventory;
+        return parsed;
     }
 
     private Inventory parseFromHTML(String data) {
-        Inventory inventory = new Inventory();
+        Inventory parsed = new Inventory();
 
         Document doc = Jsoup.parse(data);
         Elements tds = doc.getElementsByTag("td");
@@ -96,14 +98,17 @@ public class DataIO {
         Element[] cells = tds.toArray(Element[]::new);
 
         for (int i = 0; i < cells.length; i += 3) {
-            inventory.addItem(new Item(cells[i].text(), cells[i + 1].text(), cells[i + 2].text()));
+            parsed.addItem(new Item(cells[i].text(), cells[i + 1].text(), cells[i + 2].text()));
         }
 
-        return inventory;
+        return parsed;
     }
 
     private Inventory parseFromJSON(String data) {
+        // Get primitive inventory from gson
         PrimitiveInventory privInv = new Gson().fromJson(data, PrimitiveInventory.class);
+
+        // Convert it
         return InventoryConverter.primitiveInventoryToSuper(privInv);
     }
 
