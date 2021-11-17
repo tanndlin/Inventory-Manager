@@ -36,6 +36,7 @@
                                 </HBox>
                             </children>
                         </Pane>
+                  <Pane prefHeight="0.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
                         <ButtonBar prefHeight="40.0" prefWidth="16.0">
                             <buttons>
                                 <Button mnemonicParsing="false" onAction="#addItem" text="Add Item" />
