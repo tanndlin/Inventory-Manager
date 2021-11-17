@@ -75,9 +75,10 @@ public class FXMLController implements Initializable {
         valueColumn.prefWidthProperty().bind(scene.widthProperty().divide(3));
 
         inventoryManager = new InventoryManager(new Inventory(), scene);
-
-        filteredList = new FilteredList<>(inventoryManager.getInventory().getItems());
         table.setItems(inventoryManager.getInventory().getItems());
+
+        // Init filteredList for when user uses the search bar
+        filteredList = new FilteredList<>(inventoryManager.getInventory().getItems());
     }
 
     @FXML
@@ -86,6 +87,7 @@ public class FXMLController implements Initializable {
         String name = nameInput.getText();
         String value = valueInput.getText();
 
+        // Try to add item
         try {
             Item item = new Item(serialNumber, name, value);
             inventoryManager.addItem(item);
@@ -94,6 +96,7 @@ public class FXMLController implements Initializable {
             nameInput.clear();
             valueInput.clear();
         } catch (IllegalArgumentException e) {
+            // Display error
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Input Not Valid");
             alert.setContentText(e.getLocalizedMessage());
@@ -103,11 +106,13 @@ public class FXMLController implements Initializable {
 
     @FXML
     private void editItem() {
+        // Fill in the fields with the selected item's attributes
         Item selectedItem = table.getSelectionModel().getSelectedItem();
         serialInput.setText(selectedItem.getSerialNumber());
         nameInput.setText(selectedItem.getName());
         valueInput.setText(selectedItem.getValue() + "");
 
+        // Take it out of the list
         inventoryManager.removeItem(selectedItem);
     }
 
@@ -128,11 +133,13 @@ public class FXMLController implements Initializable {
 
     @FXML
     private void searchItem() {
+        // If the search bar is empty, show normal list
         if (searchInput.getText().length() == 0) {
             table.setItems(inventoryManager.getInventory().getItems());
             return;
         }
 
+        // Set predicate based on item.matches
         filteredList.setPredicate(item -> item.matches(searchInput.getText()));
 
         // Wrap filtered list in sorted list to make it sortable

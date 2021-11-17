@@ -54,10 +54,12 @@ public class InventoryManager {
         if (loadedInventory == null)
             return;
 
+        // put loaded item in the current inventory
         inventory.stealItems(loadedInventory);
     }
 
     public void addItem(Item item) {
+        // Check for duplicate
         if (isDuplicate(item))
             throw new IllegalArgumentException("Duplicate Serial Numbers: " + item.getSerialNumber());
 
@@ -69,6 +71,7 @@ public class InventoryManager {
     }
 
     private boolean isDuplicate(Item item) {
+        // Iterate each item, see if it has the same serial
         for (Item i : inventory.getItems())
             if (i.getSerialNumber().equals(item.getSerialNumber()))
                 return true;
