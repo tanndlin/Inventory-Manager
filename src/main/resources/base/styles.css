@@ -70,6 +70,10 @@
     -fx-text-background-color: black;
 }
 
+.table-row-cell:selected {
+   -fx-background-color: steelblue;
+}
+
 .table-view .virtual-flow .scroll-bar:vertical,
 .table-view .virtual-flow .scroll-bar:vertical .track,
 .table-view .virtual-flow .scroll-bar:vertical .track-background,
